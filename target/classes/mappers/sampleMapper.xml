@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="org.edu.dao.IF_SampleMapper">
+<mapper namespace="org.edu.dao.IF_SampleDAO">
 
 	<insert id="insertMember"> <!-- 입력쿼리 -->
 	<!-- updatedate는 수정한 날짜가 들어갑니다 나중에 regdate가 빠지고 updatedate가 들어갑니다.-->

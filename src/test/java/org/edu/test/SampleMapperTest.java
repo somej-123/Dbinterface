@@ -5,7 +5,7 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-import org.edu.dao.IF_SampleMapper;
+import org.edu.dao.IF_SampleDAO;
 import org.edu.vo.MemberVO;
 // import org.edu.dao.SampleSelectProvider;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)//이 클래스를 j유닛이라는 클래스로 사용합니다.
 @ContextConfiguration(locations ={"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
 public class SampleMapperTest {
 	
@@ -38,7 +38,7 @@ public class SampleMapperTest {
 	// interface 로 Mybatis 쿼리 사용 DI처리(Dependency Injcetion)
 	@Inject
 	//IF = interface
-	private IF_SampleMapper mapper;
+	private IF_SampleDAO mapper;
 	//클래스를 실행변수로 사용시 => IF_SampleMapper mapper = new IF_SampleMapper
 	@Test
 	public void testInsertMember() {

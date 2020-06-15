@@ -1,9 +1,14 @@
-package org.edu.web;
+package org.edu.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
+import org.edu.dao.IF_SampleDAO;
+import org.edu.vo.MemberVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+	@Inject
+	private IF_SampleDAO dao;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -32,7 +38,12 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		
+		String maker = "우정호";
+		model.addAttribute("jspMaker", maker);//괄호안은 인자
+		//제네릭타입-List<T>를 사용하는 이유는 실행시(runtime)에서만 발생될 수 있는 에러를
+		//서버에 올리기 전에 미리 이클립스 단에서 컴파일시 에러를 확인 가능하게 하기 위해서
+		List<MemberVO> list = dao.selectMember();
+		model.addAttribute("memberList", list);
 		return "home";
 	}
 	

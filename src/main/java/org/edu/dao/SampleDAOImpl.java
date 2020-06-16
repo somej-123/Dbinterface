@@ -6,7 +6,8 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.edu.vo.MemberVO;
-
+import org.springframework.stereotype.Repository;
+@Repository
 public class SampleDAOImpl implements IF_SampleDAO{
 	
 	@Inject

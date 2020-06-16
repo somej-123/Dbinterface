@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
@@ -11,7 +12,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- log4jdbc 설정전 -->
-	<!-- 반드시 네임스페이스에 mybatis-spring 지정함. -->
+	<!-- 반드시 네임스페이스에 mybatis-spring 지정함. 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mysql://127.0.0.1:3306/interface"></property>
@@ -19,7 +20,16 @@
 		<property name="username" value="root"></property>
 		<property name="password" value="apmsetup"></property>
 	</bean>
-	
+	-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" 
+				  value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="url" 
+				  value="jdbc:log4jdbc:mysql://127.0.0.1:3306/interface"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="apmsetup"></property>
+		
+	</bean>
 
 	<!--
 		DataSource 설정으로 JDBC 연결후, MyBatis와 MySql을 연동시킴. 
@@ -50,12 +60,13 @@
 	              value="org.joywins.dao.IF_SampleMapper"/>
 	        <property name="sqlSessionFactory" value="sqlSessionFactory"/>
 	</bean>	      
-	
+	<mybatis-spring:scan base-package="org.edu.dao"/>
 	      위 1.과 같이 하면 매번 Mapper 인터페이스를 인식시켜야 하므로
 	       아래 설정으로 mybatis-spring:scan 은 자동으로 해당 패키지 안에 선언된 
 	       인터페이스를 Mapper 로 인식함. 
 	 -->
-	 <mybatis-spring:scan base-package="org.edu.dao"/>
+	 <context:component-scan base-package="org.edu.dao"></context:component-scan>
+	 <context:component-scan base-package="org.edu.service"></context:component-scan>
 			
 			
 </beans>

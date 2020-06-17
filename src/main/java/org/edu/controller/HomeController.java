@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Handles requests for the application home page.
@@ -31,6 +33,18 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 * @throws Exception 
 	 */
+	@RequestMapping(value = "/admin/member/create", method = RequestMethod.POST)
+	public String createMember(MemberVO memberVO, Model model ,  RedirectAttributes rdat) throws Exception {
+		
+		sampleservice.insertMember(memberVO);
+		return "redirect:/";
+		}
+	@RequestMapping(value = "/admin/member/delete", method = RequestMethod.POST)
+	public String deleteMember(@RequestParam("userid") String userid,MemberVO memberVO, Model model ,  RedirectAttributes rdat) throws Exception {
+		
+		sampleservice.deleteMember(userid);
+		return "redirect:/";//삭제 된 후 화면 리플레쉬 하는 효과를 줌
+		}
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);

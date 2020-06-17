@@ -6,14 +6,18 @@ import java.util.Random;
 import javax.inject.Inject;
 
 import org.edu.dao.IF_SampleDAO;
+import org.edu.service.IF_SampleService;
+import org.edu.service.SampleServiceImpl;
 import org.edu.vo.MemberVO;
 // import org.edu.dao.SampleSelectProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)//이 클래스를 j유닛이라는 클래스로 사용합니다.
+@WebAppConfiguration // Juit과 AOP동시 사용  에러 처리를 위해서 추가
 @ContextConfiguration(locations ={"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
 public class SampleMapperTest {
 	
@@ -40,32 +44,34 @@ public class SampleMapperTest {
 	//IF = interface
 	private IF_SampleDAO mapper;
 	//클래스를 실행변수로 사용시 => IF_SampleMapper mapper = new IF_SampleMapper
+	@Inject
+	private IF_SampleService sampleService;
 	@Test
-	public void testInsertMember() {
+	public void testInsertMember() throws Exception {
 		//실행가능한 객체 생성
 		//testSelectMember(); = 목록 조회
 		/*int vRandom = 0;
 		Random ran = new Random();
 		vRandom = ran.nextInt();*/
-		testSelectMember();
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyyMMddHHmmss");
 		String today= formatter.format(new java.util.Date());
-		System.out.println("입력 전 리스트 입니다.");
+		//testSelectMember(); 디버그 때문에 안사용함..
+		//System.out.println("입력 전 리스트 입니다.");
 		MemberVO vo = new MemberVO();
 		vo.setUserid("user"+ today);
 		vo.setUserpw("1234");
 		vo.setUsername("각시탈");
 		vo.setEmail("test12@test.com");
-		mapper.insertMember (vo);
-		System.out.println("입력 후 리스트 입니다.");
+		sampleService.insertMember (vo);
+		//System.out.println("입력 후 리스트 입니다.");
 		//testSelectMember(); = 목록 조회
-		testSelectMember();
+		//testSelectMember();
 		
 	}
 	@Test
 	public void testSelectMember() {
 		List<MemberVO> list = mapper.selectMember();
-		int cnt = 1;
+		/*int cnt = 1;
 		for(MemberVO vo:list) {
 			System.out.println(
 					"번호 " + cnt++ + "번 " +
@@ -74,29 +80,29 @@ public class SampleMapperTest {
 					" name :" + vo.getUsername()+
 					"email : "+ vo.getEmail()
 					);
-		}
+		}*/
 	}
 	@Test
 	public void testUpdateMember() {
 		MemberVO vo = new MemberVO();
 		//수정은 여러개의 변수값을 변경하기 때문에 MemberVO클래스 변수를 매개변수로 사용한다.
-		testSelectMember();
-		System.out.println("수정 전 이름을 확인해주세요");
+		//testSelectMember();
+		//System.out.println("수정 전 이름을 확인해주세요");
 		vo.setUserid("user2");
 		vo.setUserpw("4321");
 		vo.setUsername("우정호");
 		vo.setEmail("tt@abc.com");
 		mapper.updateMember(vo);
-		System.out.println("수정 후  이름을 확인해주세요");
-		testSelectMember();
+		//System.out.println("수정 후  이름을 확인해주세요");
+		//testSelectMember();
 		
 	}
 	@Test
 	public void  testDeleteMember() {
-		testSelectMember();
+		//testSelectMember();
 		mapper.deleteMember("user2");
-		System.out.println("지운 후 회원리스트");
-		testSelectMember();
+		//System.out.println("지운 후 회원리스트");
+		//testSelectMember();
 	}
 	//인터페이스를 실행가능하게 mapper 실행변수로 지정
 	/*IF_SampleMapper mapper = new IF_SampleMapper(); 위와 같은 방법으로 사용함 */

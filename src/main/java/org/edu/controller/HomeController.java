@@ -39,6 +39,13 @@ public class HomeController {
 		sampleservice.insertMember(memberVO);
 		return "redirect:/";
 		}
+	//회원수정을 위한 경로
+	@RequestMapping(value = "/admin/member/update", method = RequestMethod.POST)
+	public String updateMember(MemberVO memberVO, Model model ,  RedirectAttributes rdat) throws Exception {
+		
+		sampleservice.updateMember(memberVO);
+		return "redirect:/";
+		}
 	@RequestMapping(value = "/admin/member/delete", method = RequestMethod.POST)
 	public String deleteMember(@RequestParam("userid") String userid,MemberVO memberVO, Model model ,  RedirectAttributes rdat) throws Exception {
 		

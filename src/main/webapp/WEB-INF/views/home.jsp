@@ -81,22 +81,28 @@
 				<th scope="col">사용자이메일</th>
 				<th scope="col">사용자등록일</th>
 				<th scope="col">사용자수정일</th>
+				<th scope="col">수정</th>
 				<th scope="col">삭제</th>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${memberList}" var="vo" varStatus="status"><!-- maker와 같은 역활 -->
+		<c:forEach items="${memberList}" var="vo" varStatus="status"><!-- maker와 같은 역할 -->
 			<tr>
 				<td>${status.count}</td>
-				<td>${vo.userid}</td>
-				<td>${vo.userpw}</td>
-				<td>${vo.username}</td>
-				<td>${vo.email}</td>
+				<form action ="admin/member/update" method="post">
+				<td>
+				${vo.userid}
+				<input type="hidden" name="userid" value="${vo.userid}" ></td>
+				<td><input type="text" name="userpw" value=" ${vo.userpw}"></td>
+				<td><input type="text" name="username" value="${vo.username}"></td>
+				<td><input type="text" name="email" value="${vo.email}"></td>
 				<td>${vo.regdate}</td>
 				<td>${vo.updatedate}</td>
+				<td><input type="submit" value="수정"></td>
+				</form>
 				<td>
 				<form action="/admin/member/delete" method="post">
-				<input type="text" value="${vo.userid}" name="userid">
+				<input type="hidden" value="${vo.userid}" name="userid">
 				<input type="submit" value="삭제">
 				</form>
 				</td>
